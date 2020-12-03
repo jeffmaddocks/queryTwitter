@@ -1,6 +1,5 @@
 pandas
 tweepy
-nltk
 openpyxl
 tabpy
 configparser
