@@ -1,7 +1,7 @@
 # queryTwitter
-Allows TabPy to easily query twitter handles
+*test* Allows TabPy to easily query twitter handles
 
-install requirements by running: 
+install required packages by running: 
 
 > pip install -r 'requirements.txt'
 
