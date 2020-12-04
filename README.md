@@ -12,7 +12,9 @@ Future features include [insert safe harbor state here] ... [jk this is all free
 - sentiment analysis would be neat
 
 ## Setup
-1. Setting up a virtual environment is a great idea! You may have TabPy configured already and simply need to install the requirements in step 2, so jump down there now, silly. You may live dangerously and decide not to use a virtual environment; you plan to install packages as error messages pop up and so you've already skipped to step 3, you rebel!
+1. Download or clone this project into your working directory.
+
+2. Setting up a virtual environment is a great idea! You may have TabPy configured already and simply need to install the requirements in step 3, so jump down there now, silly. You may live dangerously and decide not to use a virtual environment; you plan to install packages as error messages pop up and so you've already skipped to step 4, you rebel!
 
     The rest of us may want to [at least see all the different ways TabPy can be setup](https://github.com/tableau/TabPy). Let's get started using virtualenv in bash:
     ```
@@ -22,11 +24,11 @@ Future features include [insert safe harbor state here] ... [jk this is all free
     ```
     There's even [instructions for Windows](https://programwithus.com/learn/python/pip-virtualenv-windows).
 
-2. Install required packages by running pip from the terminal: 
+3. Install required packages by running pip from the terminal: 
     ```
     pip install -r 'requirements.txt'
     ```
-3. Create a text file 'twitterkey.ini' as follows, [updating with your keys, secrets and tokens from Twitter](https://developer.twitter.com/en/docs/authentication/oauth-1-0a):
+4. Create a text file 'twitterkey.ini' as follows, [updating with your keys, secrets and tokens from Twitter](https://developer.twitter.com/en/docs/authentication/oauth-1-0a):
     ```
     [Consume]
     consumer_key    = __your_consumer_key_here__
@@ -36,14 +38,14 @@ Future features include [insert safe harbor state here] ... [jk this is all free
     access_token  = __your_access_token_here__
     access_secret = __your_access_secret_here__
     ```
-4. Modify twitter_query.csv with the twitter handles you want to query, and how many records to request from the API. Note that multiple handles can be queried at once by adding a new line to the file.
+5. Modify twitter_query.csv with the twitter handles you want to query, and how many records to request from the API. Note that multiple handles can be queried at once by adding a new line to the file.
 
-5. Start TabPy, note that TabPy listens on port 9004:
+6. Start TabPy, note that TabPy listens on port 9004:
     ```
     tabpy
     ```
 
-6. Open Tableau Prep Builder and ...
+7. Open Tableau Prep Builder and ...
     - add twitter_query.csv as a data source
     - add a script step
     - choose Tableau Python (TabPy) Server
@@ -54,4 +56,4 @@ Future features include [insert safe harbor state here] ... [jk this is all free
     - press the Browse button and select 'queryTwitter.py'
     - type 'queryTwitter' into the Function Name
 
-7. Enjoy!
+8. Enjoy!
