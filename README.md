@@ -2,9 +2,9 @@
 Allows TabPy to easily query twitter handles
 
 Install required packages by running: 
-
-> pip install -r 'requirements.txt'
-
+```
+pip install -r 'requirements.txt'
+```
 Create a text file 'twitterkey.ini' as follows, [updating with your keys, secrets and tokens from Twitter](https://developer.twitter.com/en/docs/authentication/oauth-1-0a):
 ```
 [Consume]
