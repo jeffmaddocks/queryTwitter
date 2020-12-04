@@ -1,8 +1,16 @@
 # queryTwitter
-Uses [TabPy](https://github.com/tableau/TabPy) to pull twitter mentions into Tableau Prep. 
+Uses [TabPy](https://github.com/tableau/TabPy) to pull twitter mentions (posts that mention a twitter handle) into Tableau Prep. The result includes:
+- id
+- search_handle
+- author_name
+- author_handle
+- created_at
+- tweet_text
+- retweet_count
+- favorite_count
 
 Future features include [insert safe harbor state here] ... [jk this is all free and no warranty or support is implied]:
-- pulling a user feed is a different exercise that may be added in a future version
+- pulling a user feed (posts made by a twitter handle) is a different exercise that may be added in a future version
 - word tokenization with NLTK will be released shortly
 - sentiment analysis would be neat
 
