@@ -1,5 +1,5 @@
 # queryTwitter
-*test* Allows TabPy to easily query twitter handles
+**test* Allows TabPy to easily query twitter handles
 
 install required packages by running: 
 
