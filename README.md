@@ -7,7 +7,7 @@ Future features include [insert safe harbor state here] ... [jk this is all free
 - sentiment analysis would be neat
 
 ## Setup
-1. Setting up a virtual environment is a great idea! You may have TabPy configured already and simply need to install the requirements in step 2, so jump down there now, silly. You may live dangerously and decide not to use a virtual environment and plan to install packages as error messages pop up and so you've already skipped to step 3, you rebel!
+1. Setting up a virtual environment is a great idea! You may have TabPy configured already and simply need to install the requirements in step 2, so jump down there now, silly. You may live dangerously and decide not to use a virtual environment; you plan to install packages as error messages pop up and so you've already skipped to step 3, you rebel!
 
     The rest of us may want to [at least see all the different ways TabPy can be setup](https://github.com/tableau/TabPy). Let's get started using virtualenv in bash:
     ```
