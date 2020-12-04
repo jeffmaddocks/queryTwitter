@@ -9,35 +9,35 @@ Future features include [insert safe harbor state here] ... [jk this is all free
 ## Setup
 1. Setting up a virtual environment is a great idea! You may have TabPy configured already and simply need to install the requirements in step 2, so jump down there now, silly. You may live dangerously and decide not to use a virtual environment and plan to install packages as error messages pop up and so you've already skipped to step 3. You may want to [review the TabPy setup instructions](https://github.com/tableau/TabPy).
 
-Still here? The simplest way to do this is using virtualenv in bash:
-```
-mkdir env
-virtualenv -p python3 ./env
-source env/bin/activate
-```
+    Still here? The simplest way to do this is using virtualenv in bash:
+    ```
+    mkdir env
+    virtualenv -p python3 ./env
+    source env/bin/activate
+    ```
 
-There's even [instructions for Windows](https://programwithus.com/learn/python/pip-virtualenv-windows).
+    There's even [instructions for Windows](https://programwithus.com/learn/python/pip-virtualenv-windows).
 
 2. Install required packages by running pip from the terminal: 
-```
-pip install -r 'requirements.txt'
-```
+    ```
+    pip install -r 'requirements.txt'
+    ```
 3. Create a text file 'twitterkey.ini' as follows, [updating with your keys, secrets and tokens from Twitter](https://developer.twitter.com/en/docs/authentication/oauth-1-0a):
-```
-[Consume]
-consumer_key    = __your_consumer_key_here__
-consumer_secret = __your_consumer_secret_here__
+    ```
+    [Consume]
+    consumer_key    = __your_consumer_key_here__
+    consumer_secret = __your_consumer_secret_here__
 
-[Access]
-access_token  = __your_access_token_here__
-access_secret = __your_access_secret_here__
-```
+    [Access]
+    access_token  = __your_access_token_here__
+    access_secret = __your_access_secret_here__
+    ```
 4. Modify twitter_query.csv with the twitter handles you want to query, and how many records to request from the API. Note that multiple handles can be queried at once by adding a new line to the file.
 
 5. Start TabPy, note that TabPy listens on port 9004:
-```
-tabpy
-```
+    ```
+    tabpy
+    ```
 
 6. Open Tableau Prep Builder and ...
     - add twitter_query.csv as a data source
