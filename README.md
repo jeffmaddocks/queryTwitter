@@ -3,8 +3,8 @@ Uses [TabPy](https://github.com/tableau/TabPy) to pull twitter mentions (posts t
 
 | id | search_handle | author_name | author_handle | created_at | tweet_text | retweet_count | favorite_count |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1334900929485807617 | @tableau | Jack | @Jack | 2020-12-04 16:42:37 | I left a small window open last night and the smoke from the outside #wildfires made our smoke alarm go off ... https://t.co/qj79wtXZ7o | 15 | 97 |
-| 1334899744963870720 | @tableau | Jill | @Jill | 2020-12-04 16:37:55 | 5 of the 10 biggest #wildfires in California history are burning right now. Fossil fuels brought the ... https://t.co/BqRZvnj7Ir | 0 | 0 |
+| 1334900929485807617 | @tableau | Jack | @Jack | 2020-12-04 16:42:37 | The smoke from the outside #wildfires ... https://t.co/qj79wtXZ7o | 15 | 97 |
+| 1334899744963870720 | @tableau | Jill | @Jill | 2020-12-04 16:37:55 | biggest #wildfires in California history ... https://t.co/BqRZvnj7Ir | 0 | 0 |
 
 Future features include [insert safe harbor state here] ... [jk this is all free and no warranty or support is implied]:
 - pulling a user feed (posts made by a twitter handle) is a different exercise that may be added in a future version
