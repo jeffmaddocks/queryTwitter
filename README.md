@@ -1,7 +1,7 @@
 # queryTwitter
 Allows TabPy to easily query twitter handles
 
-Install required packages by running: 
+1) Install required packages by running pip from the terminal: 
 ```
 pip install -r 'requirements.txt'
 ```
@@ -15,4 +15,4 @@ consumer_secret = __your_consumer_secret_here__
 access_token  = __your_access_token_here__
 access_secret = __your_access_secret_here__
 ```
-modify twitter_qery.csv with the twitter handles you want to query, and how many records to request from the API
+Modify twitter_qery.csv with the twitter handles you want to query, and how many records to request from the API. Note that multiple handles can be queried at once by adding a new line to the file.
