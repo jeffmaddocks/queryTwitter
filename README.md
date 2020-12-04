@@ -1,5 +1,5 @@
 # queryTwitter
-Uses TabPy to pull twitter feeds into Tableau Prep.
+Uses TabPy to pull twitter mentions into Tableau Prep. Note that pulling a user feed is a different exercise that may be added in a future version.
 
 1. Setting up a virtual environment is a great idea! Here's an example using virtualenv in bash:
 ```
@@ -38,7 +38,7 @@ tabpy
     - your TabPy service may be running locally, so enter localhost in the Server box
     - set the port to 9004
     - leave all other fields empty and press the Sign In button
-    - press the Browse button and select queryTwitter.py
-    - type 'queryTwitter' inot the Function Name
+    - press the Browse button and select 'queryTwitter.py'
+    - type 'queryTwitter' into the Function Name
 
 7. Enjoy!
