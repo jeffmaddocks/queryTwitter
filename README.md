@@ -1,13 +1,22 @@
 # queryTwitter
-Uses TabPy to pull twitter mentions into Tableau Prep. Note that pulling a user feed is a different exercise that may be added in a future version.
+Uses [TabPy](https://github.com/tableau/TabPy) to pull twitter mentions into Tableau Prep. 
 
-1. Setting up a virtual environment is a great idea! Here's an example using virtualenv in bash:
+Future features include [insert safe harbor state here] ... [jk this is all free and no warranty or support is implied]:
+- pulling a user feed is a different exercise that may be added in a future version
+- word tokenization with NLTK will be released shortly
+- sentiment analysis would be neat
+
+## Setup
+1. Setting up a virtual environment is a great idea! You may have TabPy configured already and simply need to install the requirements in step 2, so jump down there now, silly. You may live dangerously and decide not to use a virtual environment and plan to install packages as error messages pop up and so you've already skipped to step 3. You may want to [review the TabPy setup instructions](https://github.com/tableau/TabPy).
+
+Still here? The simplest way to do this is using virtualenv in bash:
 ```
-mkdir env && cd env
-virtualenv -p python3 .
-cd ..
-source env/bin/actviate
+mkdir env
+virtualenv -p python3 ./env
+source env/bin/activate
 ```
+
+There's even [instructions for Windows](https://programwithus.com/learn/python/pip-virtualenv-windows).
 
 2. Install required packages by running pip from the terminal: 
 ```
