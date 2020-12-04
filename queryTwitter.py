@@ -21,7 +21,7 @@ def get_output_schema():
         'author_handle': prep_string(),
         'created_at': prep_string(),
         'search_handle': prep_string(),
-        'text': prep_string(),
+        'tweet_text': prep_string(),
         'retweet_count': prep_int(),
         'favorite_count': prep_int()
     })
@@ -47,7 +47,7 @@ def get_tweets(string_serch, int_returnrows):
         outtweets = [tweet.id_str, tweet.author.name, '@'+tweet.author.screen_name, tweet.created_at, tweet.text, tweet.retweet_count, tweet.favorite_count]
         alltweets.append(outtweets)
 
-    df = pd.DataFrame(data=alltweets, columns=['id','author_name', 'author_handle', 'created_at','text','retweet_count','favorite_count'])
+    df = pd.DataFrame(data=alltweets, columns=['id','author_name', 'author_handle', 'created_at','tweet_text','retweet_count','favorite_count'])
     return df
 
 if __name__ == "__main__":
