@@ -4,7 +4,7 @@ Uses [TabPy](https://github.com/tableau/TabPy) to pull twitter mentions (posts t
 | id | search_handle | author_name | author_handle | created_at | tweet_text | retweet_count | favorite_count |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 133409294807617 | @CAgovernor | Jack | @Jack | 2020-08-26 16:42:37 | @CAgovernor the smoke from the #wildfires ... | 15 | 97 |
-| 133497449670720 | @CAgovernor | Jill | @Jill | 2020-08-26 16:37:55 | @CAgovernor biggest fires in CA history ... | 0 | 0 |
+| 133497449670720 | @CAgovernor | Jill | @Jill | 2020-08-26 16:37:55 | biggest fires in CA history @CAgovernor ... | 0 | 6 |
 
 Future features include [insert safe harbor state here] ... [jk this is all free and no warranty or support is implied]:
 - pulling a user feed (posts made by a twitter handle) is a different exercise that may be added in a future version
@@ -28,7 +28,7 @@ Future features include [insert safe harbor state here] ... [jk this is all free
     ```
     pip install -r 'requirements.txt'
     ```
-4. Create a text file 'twitterkey.ini' as follows, [updating with your keys, secrets and tokens from Twitter](https://developer.twitter.com/en/docs/authentication/oauth-1-0a):
+4. Create a text file named 'twitterkeys.ini' and update it as follows, [updating with your keys, secrets and tokens from Twitter](https://developer.twitter.com/en/docs/authentication/oauth-1-0a):
     ```
     [Consume]
     consumer_key    = __your_consumer_key_here__
