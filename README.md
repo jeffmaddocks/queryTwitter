@@ -28,7 +28,7 @@ Future features include [insert safe harbor state here] ... [jk this is all free
     ```
     pip install -r 'requirements.txt'
     ```
-4. Create a text file named 'twitterkeys.ini' and update it as follows, [updating with your keys, secrets and tokens from Twitter](https://developer.twitter.com/en/docs/authentication/oauth-1-0a):
+4. Create a text file named 'twitterkeys.ini' and [insert your keys, secrets and tokens from Twitter](https://developer.twitter.com/en/docs/authentication/oauth-1-0a) with no underscores, quotes or double quotes:
     ```
     [Consume]
     consumer_key    = __your_consumer_key_here__
