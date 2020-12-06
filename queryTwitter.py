@@ -12,6 +12,9 @@ from nltk import TweetTokenizer
 from nltk import FreqDist, classify, NaiveBayesClassifier
 
 def train_model(stop_words):
+    # https://www.digitalocean.com/community/tutorials/how-to-perform-sentiment-analysis-in-python-3-using-the-natural-language-toolkit-nltk
+    # https://github.com/sdaityari/sentiment.analysis.tutorial/blob/master/Sentiment%20Analysis%20in%20Python%203.ipynb
+    # Shaumik Daityari
 
     positive_tweet_tokens = twitter_samples.tokenized('positive_tweets.json')
     negative_tweet_tokens = twitter_samples.tokenized('negative_tweets.json')
