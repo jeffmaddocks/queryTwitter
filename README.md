@@ -1,15 +1,15 @@
 # queryTwitter
-Uses [TabPy](https://github.com/tableau/TabPy) to pull twitter mentions (posts that mention a twitter handle) into Tableau Prep. The result includes:
+Uses [TabPy](https://github.com/tableau/TabPy) and [Tableau Prep](https://www.tableau.com/products/prep) to perform sentiment analysis on twitter mentions (posts that mention a twitter handle). The result includes:
 
-| id | search_handle | author_name | author_handle | created_at | tweet_text | retweet_count | favorite_count |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 133409294807617 | @CAgovernor | Jack | @Jack | 2020-08-26 16:42:37 | @CAgovernor the smoke from the #wildfires ... | 15 | 97 |
-| 133497449670720 | @CAgovernor | Jill | @Jill | 2020-08-26 16:37:55 | biggest fires in CA history @CAgovernor ... | 0 | 6 |
+| id | search_handle | author_name | author_handle | created_at | tweet_text | retweet_count | favorite_count | tokens | sentiment |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 133409294807617 | @CAgovernor | Jack | @Jack | 2020-08-26 16:42:37 | @CAgovernor the smoke from the #wildfires ... | 15 | 97 | ['smoke','#wildfires'] | Negative  |
+| 133497449670720 | @CAgovernor | Jill | @Jill | 2020-08-26 16:37:55 | biggest fires in CA history @CAgovernor ... | 0 | 6 | ['biggest','fires','CA','history'] | Negative |
 
 Future features include [insert safe harbor state here] ... [jk this is all free and no warranty or support is implied]:
 - pulling a user feed (posts made by a twitter handle) is a different exercise that may be added in a future version
-- word tokenization with NLTK will be released shortly
-- sentiment analysis would be neat
+- currently using a NaiveBayesClassifier, will compare results against VADER
+- will investigate ways to include the score confidence in the future, so that borderline cases can be excluded from the analysis
 
 ## Setup
 1. Download or clone this project into your working directory.
