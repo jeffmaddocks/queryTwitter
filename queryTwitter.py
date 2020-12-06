@@ -3,13 +3,111 @@ import tweepy
 import json
 import configparser
 
-def queryTwitter(df):
-    df_final = pd.DataFrame()
-    for i in df.iterrows():
+import re, string, random
+
+from nltk.stem.wordnet import WordNetLemmatizer
+from nltk.corpus import twitter_samples, stopwords
+from nltk.tag import pos_tag
+from nltk import TweetTokenizer
+from nltk import FreqDist, classify, NaiveBayesClassifier
+
+def train_model(stop_words):
+
+    positive_tweet_tokens = twitter_samples.tokenized('positive_tweets.json')
+    negative_tweet_tokens = twitter_samples.tokenized('negative_tweets.json')
+
+    positive_cleaned_tokens_list = []
+    negative_cleaned_tokens_list = []
+
+    for tokens in positive_tweet_tokens:
+        positive_cleaned_tokens_list.append(remove_noise(tokens, stop_words))
+
+    for tokens in negative_tweet_tokens:
+        negative_cleaned_tokens_list.append(remove_noise(tokens, stop_words))
+
+    all_pos_words = get_all_words(positive_cleaned_tokens_list)
+
+    freq_dist_pos = FreqDist(all_pos_words)
+    print(freq_dist_pos.most_common(10))
+
+    positive_tokens_for_model = get_tweets_for_model(positive_cleaned_tokens_list)
+    negative_tokens_for_model = get_tweets_for_model(negative_cleaned_tokens_list)
+
+    positive_dataset = [(tweet_dict, "Positive")
+                         for tweet_dict in positive_tokens_for_model]
+
+    negative_dataset = [(tweet_dict, "Negative")
+                         for tweet_dict in negative_tokens_for_model]
+
+    dataset = positive_dataset + negative_dataset
+
+    random.shuffle(dataset)
+
+    train_data = dataset[:7000]
+    test_data = dataset[7000:]
+
+    classifier = NaiveBayesClassifier.train(train_data)
+
+    print("Accuracy is:", classify.accuracy(classifier, test_data))
+
+    print(classifier.show_most_informative_features(10))
+
+    return classifier
+
+def remove_noise(tweet_tokens, stop_words):
+    # print(f'noisy: {tweet_tokens}')
+    addnl_noise = ['…', '“', '”']
+    cleaned_tokens = []
+    for token, tag in pos_tag(tweet_tokens):
+        token = re.sub('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+#]|[!*(),]|'
+                       '(?:%[0-9a-fA-F][0-9a-fA-F]))+','', token)
+        token = re.sub("(@[A-Za-z0-9_]+)","", token)
+
+        skip = 0 # skip provides additional conditions for the token to be ignored
+        for x in addnl_noise: # check for additional noisy characters which should not be tokens
+            if x == token: skip = 1
+
+        if tag.startswith("NN"):
+            pos = 'n'
+        elif tag.startswith('VB'):
+            pos = 'v'
+        else:
+            pos = 'a'
+            skip = 1 # we're not processing anything other than nouns and verbs
+
+        if skip == 1: continue # unless this token was skipped, continue processing
+        lemmatizer = WordNetLemmatizer()
+        token = lemmatizer.lemmatize(token, pos)
+
+        if len(token) > 0 and token not in string.punctuation and token.lower() not in stop_words:
+            cleaned_tokens.append(token.lower())
+    # print(f'quiet: {cleaned_tokens}')
+    return cleaned_tokens
+
+def get_all_words(cleaned_tokens_list):
+    for tokens in cleaned_tokens_list:
+        for token in tokens:
+            yield token
+
+def get_tweets_for_model(cleaned_tokens_list):
+    for tweet_tokens in cleaned_tokens_list:
+        yield dict([token, True] for token in tweet_tokens)
+
+def queryTwitter(df): # the initial df is the csv containing the twitter handles to query
+    stop_words = stopwords.words('english')
+    train_model(stop_words)
+    df_final = pd.DataFrame() # the final df will hold all tweets across all handles
+    for i in df.iterrows(): # iterate thru the handles
         print('processing: '+ i[1][0])
-        df2 = get_tweets(i[1][0]+' -filter:retweets', i[1][1])
+        df2 = get_tweets(i[1][0]+' -filter:retweets', i[1][1]) # create a new df to hold the tweets for each handle
         df2.insert(1,'search_handle', i[1][0])
         df2 = df2.astype({'created_at': str})
+        df2.insert(len(df2.columns), 'tokens', '[]')
+        df2 = clean_tweets(df2, stop_words)
+        
+        # last major step is to score the tweet !!!!
+        # score tweets
+        
         df_final = df_final.append(df2, ignore_index=True)
 
     return df_final
@@ -43,11 +141,19 @@ def get_tweets(string_serch, int_returnrows):
 
     alltweets = []  
     for tweet in tweepy.Cursor(api.search, q=string_serch).items(int_returnrows):
-        print('    ' + tweet.text)
+        # print('    ' + tweet.text)
         outtweets = [tweet.id_str, tweet.author.name, '@'+tweet.author.screen_name, tweet.created_at, tweet.text, tweet.retweet_count, tweet.favorite_count]
         alltweets.append(outtweets)
 
     df = pd.DataFrame(data=alltweets, columns=['id','author_name', 'author_handle', 'created_at','tweet_text','retweet_count','favorite_count'])
+    return df
+
+def clean_tweets(df, stop_words):
+    tknzr = TweetTokenizer()
+    for i in df.iterrows():
+        # print('tweet: '+df['tweet_text'][i[0]])
+        tokens = tknzr.tokenize(i[1]['tweet_text']) # using NLTK tweet tokenizer
+        df['tokens'][i[0]] = remove_noise(tokens, stop_words) # need to fix this warning later
     return df
 
 if __name__ == "__main__":
