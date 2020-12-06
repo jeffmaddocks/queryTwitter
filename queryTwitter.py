@@ -73,7 +73,7 @@ def remove_noise(tweet_tokens, stop_words):
             pos = 'v'
         else:
             pos = 'a'
-            skip = 1 # we're not processing anything other than nouns and verbs
+            # skip = 1 # we're not processing anything other than nouns and verbs
 
         if skip == 1: continue # unless this token was skipped, continue processing
         lemmatizer = WordNetLemmatizer()
@@ -95,19 +95,21 @@ def get_tweets_for_model(cleaned_tokens_list):
 
 def queryTwitter(df): # the initial df is the csv containing the twitter handles to query
     stop_words = stopwords.words('english')
-    train_model(stop_words)
+    classifier = train_model(stop_words)
     df_final = pd.DataFrame() # the final df will hold all tweets across all handles
     for i in df.iterrows(): # iterate thru the handles
         print('processing: '+ i[1][0])
         df2 = get_tweets(i[1][0]+' -filter:retweets', i[1][1]) # create a new df to hold the tweets for each handle
         df2.insert(1,'search_handle', i[1][0])
         df2 = df2.astype({'created_at': str})
-        df2.insert(len(df2.columns), 'tokens', '[]')
-        df2 = clean_tweets(df2, stop_words)
-        
-        # last major step is to score the tweet !!!!
-        # score tweets
-        
+
+        # taking out dataframe insert and will try assign instead
+        # df2.insert(len(df2.columns), 'tokens', '[]')
+        df2 = df2.assign(tokens = '[]')
+        df2 = df2.assign(sentiment = '')
+
+        df2 = clean_tweets(classifier, df2, stop_words)
+
         df_final = df_final.append(df2, ignore_index=True)
 
     return df_final
@@ -148,12 +150,28 @@ def get_tweets(string_serch, int_returnrows):
     df = pd.DataFrame(data=alltweets, columns=['id','author_name', 'author_handle', 'created_at','tweet_text','retweet_count','favorite_count'])
     return df
 
-def clean_tweets(df, stop_words):
+def clean_tweets(classifier, df, stop_words):
     tknzr = TweetTokenizer()
     for i in df.iterrows():
         # print('tweet: '+df['tweet_text'][i[0]])
         tokens = tknzr.tokenize(i[1]['tweet_text']) # using NLTK tweet tokenizer
-        df['tokens'][i[0]] = remove_noise(tokens, stop_words) # need to fix this warning later
+
+        custom_tokens = remove_noise(tokens, stop_words)
+        df['tokens'][i[0]] =  custom_tokens # need to fix this warning later
+        # SettingWithCopyWarning: 
+        # A value is trying to be set on a copy of a slice from a DataFrame
+
+        # See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+
+        # grabs the current row: df.loc[i[0]]
+        # grabs the tokens column of the current row: df.loc[i[0]]['tokens']
+        # this is a python object of type array: df.loc[df.id == i[0], 'tokens']
+
+        # df.loc[df.id == i[0], 'tokens'] = remove_noise(tokens, stop_words)
+
+        score = classifier.classify(dict([token, True] for token in custom_tokens))
+        df['sentiment'][i[0]] = score
+
     return df
 
 if __name__ == "__main__":
