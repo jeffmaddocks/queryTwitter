@@ -59,16 +59,12 @@ def train_model(stop_words):
 
 def remove_noise(tweet_tokens, stop_words):
     # print(f'noisy: {tweet_tokens}')
-    addnl_noise = ['…', '“', '”']
     cleaned_tokens = []
     for token, tag in pos_tag(tweet_tokens):
         token = re.sub('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+#]|[!*(),]|'
                        '(?:%[0-9a-fA-F][0-9a-fA-F]))+','', token)
         token = re.sub("(@[A-Za-z0-9_]+)","", token)
-
-        skip = 0 # skip provides additional conditions for the token to be ignored
-        for x in addnl_noise: # check for additional noisy characters which should not be tokens
-            if x == token: skip = 1
+        token = re.sub(r'[^\x00-\x7F]+','', token)
 
         if tag.startswith("NN"):
             pos = 'n'
@@ -76,9 +72,7 @@ def remove_noise(tweet_tokens, stop_words):
             pos = 'v'
         else:
             pos = 'a'
-            # skip = 1 # we're not processing anything other than nouns and verbs
 
-        if skip == 1: continue # unless this token was skipped, continue processing
         lemmatizer = WordNetLemmatizer()
         token = lemmatizer.lemmatize(token, pos)
 
@@ -106,10 +100,8 @@ def queryTwitter(df): # the initial df is the csv containing the twitter handles
         df2.insert(1,'search_handle', i[1][0])
         df2 = df2.astype({'created_at': str})
 
-        # taking out dataframe insert and will try assign instead
-        # df2.insert(len(df2.columns), 'tokens', '[]')
-        df2 = df2.assign(tokens = '[]')
-        df2 = df2.assign(sentiment = '')
+        df2 = df2.assign(tokens = '[]') # using assign instead of insert
+        df2 = df2.assign(sentiment = '') # using assign instead of insert
 
         df2 = clean_tweets(classifier, df2, stop_words)
 
@@ -126,7 +118,9 @@ def get_output_schema():
         'search_handle': prep_string(),
         'tweet_text': prep_string(),
         'retweet_count': prep_int(),
-        'favorite_count': prep_int()
+        'favorite_count': prep_int(),
+        'tokens': prep_string(),
+        'sentiment': prep_string()
     })
 
 def get_tweets(string_serch, int_returnrows):
