@@ -104,18 +104,20 @@ def queryTwitter(df): # the initial df is the csv containing the twitter handles
         df2 = df2.assign(sentiment = '') # using assign instead of insert
 
         df2 = clean_tweets(classifier, df2, stop_words)
+        df2 = df2.astype({'tokens': str})
 
         df_final = df_final.append(df2, ignore_index=True)
+        print(df_final.columns)
 
     return df_final
 
 def get_output_schema():
     return pd.DataFrame({
         'id': prep_string(),
+        'search_handle': prep_string(),
         'author_name': prep_string(),
         'author_handle': prep_string(),
         'created_at': prep_string(),
-        'search_handle': prep_string(),
         'tweet_text': prep_string(),
         'retweet_count': prep_int(),
         'favorite_count': prep_int(),
