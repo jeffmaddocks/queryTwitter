@@ -64,7 +64,7 @@ def remove_noise(tweet_tokens, stop_words):
         token = re.sub('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+#]|[!*(),]|'
                        '(?:%[0-9a-fA-F][0-9a-fA-F]))+','', token)
         token = re.sub("(@[A-Za-z0-9_]+)","", token)
-        token = re.sub(r'[^\x00-\x7F]+','', token)
+        token = re.sub(r'[^\x00-\x7F]+','', token) # this line takes out win-1252 encoded characters, to be fixed in a future release of tabpy at which time this line can be removed
 
         if tag.startswith("NN"):
             pos = 'n'
